@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>书城首页</title>
+    <link rel="stylesheet" href="./static/css/minireset.css" />
+    <link rel="stylesheet" href="./static/css/common.css" />
+    <link rel="stylesheet" href="./static/css/iconfont.css" />
+    <link rel="stylesheet" href="./static/css/index.css" />
+    <link rel="stylesheet" href="./static/css/swiper.min.css" />
+    <script type="text/javascript" src="./static/script/vue.js"></script>
+    <script type="text/javascript" src="./static/script/axios.min.js"></script>
+    <script type="text/javascript" src="./static/script/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="./static/layer/layer.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="topbar">
+        <div class="w">
+
+          <div class="topbar-right" th:if="${session.loginUser==null}">
+            <a href="./pages/user/login.html" class="login">登录</a>
+            <a href="./pages/user/regist.html" class="register">注册</a>
+            <a
+              href="./pages/cart/cart.html"
+              class="cart iconfont icon-gouwuche
+			"
+            >购物车
+              <div class="cart-num" v-text="totalCount">3</div>
+            </a>
+          </div>
+<!--          登录后风格-->
+          <div class="topbar-right" th:unless="${session.loginUser==null}">
+            <span>欢迎你<b th:text="${session.loginUser.userName}"></b></span>
+            <a href="/books/pages/user/login?reqkey=loginOut" class="register">注销</a>
+            <a href="pages/cart/cart.html" class="cart iconfont icon-gouwuche">购物车<div class="cart-num" v-text="totalCount"></div>
+            </a>
+            <a href="/books/pages/manager/booksserverlet?reqkey=selectAll&pIndex=1" class="admin">后台管理</a>
+          </div>
+        </div>
+      </div>
+      <div class="header w">
+        <img src="./static/img/npunew.png" width="200px" height="100px">
+        <div class="header-search">
+          <input type="text" placeholder="十万个为什么" />
+          <button class="iconfont icon-search"></button>
+        </div>
+      </div>
+      <div class="banner w clearfix">
+        <div class="banner-left">
+          <ul>
+            <li>
+              <a href="">
+                <span>文学 鉴赏</span>
+                <i class="iconfont icon-jiantou"></i
+              ></a>
+            </li>
+            <li>
+              <a href="">
+                <span>社科 研究</span>
+                <i class="iconfont icon-jiantou"></i
+              ></a>
+            </li>
+            <li>
+              <a href="">
+                <span>少儿 童年</span>
+                <i class="iconfont icon-jiantou"></i
+              ></a>
+            </li>
+            <li>
+              <a href="">
+                <span>艺术 赏析</span>
+                <i class="iconfont icon-jiantou"></i
+              ></a>
+            </li>
+            <li>
+              <a href="">
+                <span>生活 周边</span>
+                <i class="iconfont icon-jiantou"></i
+              ></a>
+            </li>
+            <li>
+              <a href="">
+                <span>文教 科技</span>
+                <i class="iconfont icon-jiantou"></i
+              ></a>
+            </li>
+            <li>
+              <a href="">
+                <span>热销 畅读</span>
+                <i class="iconfont icon-jiantou"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+        <div class="banner-right">
+            <ul class="swiper-wrapper">
+              <li class="swiper-slide">
+                <img src="./static/uploads/booksShow.jpg" alt="">
+              </li>
+            </ul>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-pagination"></div>
+          </div>
+      </div>
+      <div class="books-list ">
+        <div class="w">
+          <div class="list">
+            <div class="list-header">
+              <div class="title">图书列表</div>
+              <div id="appabc">
+              <form action="/books/index?reqkey=getBypageUtil&pIndex=1" method="post" >
+              <div class="price-search">
+                <span>价格:</span>
+                <input type="text" name="minPrice" th:value="${minp}">
+                <span>-元</span>
+                <input type="text" name="maxPrice" th:value="${maxp}">
+                <span>元</span>
+                <button>查询</button>
+              </div>
+              </form>
+              </div>
+            </div>
+            <div class="list-content" >
+              <div class="list-item" th:each="book:${pu.dataList}">
+                <img th:src="'/books'+${book.imgPath}" alt="">
+                <p>书名:<span th:text="${book.title}"></span></p>
+                <p>作者:<span th:text="${book.author}"></span></p>
+                <p>价格:<span th:text="${book.price}"></span></p>
+                <p>销量:<span th:text="${book.sales}"></span></p>
+                <p>库存:<span th:text="${book.stock}"></span></p>
+                <button th:value="${book.id}" @click="addcart">加入购物车</button>
+              </div>
+            </div>
+            <div class="list-footer">
+                <div><a th:href="@{/index(reqkey='getBypageUtil',minPrice=${pu.minPrice},maxPrice=${pu.maxPrice},pIndex=1)}">首页</a></div>
+                <div><a th:href="@{/index(reqkey='getBypageUtil',minPrice=${pu.minPrice},maxPrice=${pu.maxPrice},pIndex=${pu.pageIndex-1>=0?1:pu.pageIndex-1})}">上一页</a></div>
+                <div><a th:href="@{/index(reqkey='getBypageUtil',minPrice=${pu.minPrice},maxPrice=${pu.maxPrice},pIndex=${pu.pageIndex+1>=pu.totalPage?pu.totalPage:pu.pageIndex+1})}">下一页</a></div>
+                <div><a th:href="@{/index(reqkey='getBypageUtil',minPrice=${pu.minPrice},maxPrice=${pu.maxPrice},pIndex=${pu.totalPage})}">末页</a></div>
+                <span>共<span th:text="${pu.totalPage}"></span>页</span>
+              <span><span th:text="${pu.totalCount}"></span>条记录</span>
+              <form th:action="@{/index(reqkey='getBypageUtil',minPrice=${pu.minPrice},maxPrice=${pu.maxPrice})}" method="post">
+                <span>到第</span>
+                <input type="text" name="pIndex" th:value="${pu.pageIndex}">
+                <span>页</span>
+                <button>确定</button>
+              </form>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+
+    </div>
+    <script src="./static/script/swiper.min.js"></script>
+    <script>
+      var swiper = new Swiper('.swiper-container', {
+        autoplay: true,
+        pagination: {
+          el: '.swiper-pagination',
+          dynamicBullets: true
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+      })
+    </script>
+  </body>
+  <script type="text/javascript">
+    new Vue({
+      "el":"#app",
+      "data":{
+        "totalCount":"0"
+      },
+      "methods":{
+        "addcart":function ()
+        {
+          var bid=event.target.value;
+          axios({
+            "method":"post",
+            "url":"/books/cartserverlet",
+            "params":{
+              "bookid":bid,
+              "reqkey":"addCart"
+            }
+
+          }).then(response=>{
+            if(response.data.flag)
+            {
+             // alert("添加购物车成功");
+              layer.msg("添加购物车成功");
+            }
+            else
+            {
+              //alert("添加购物车失败");
+              layer.msg("添加购物车失败");
+            }
+            this.totalCount=response.data.resultData;
+
+          })
+        },
+        "gettotalcount":function () {
+          axios({
+            "method": "post",
+            "url": "/books/cartserverlet",
+            "params": {
+              "reqkey": "gettotalcount"
+            }
+
+          }).then(response => {
+            this.totalCount = response.data.resultData;
+          })
+        }
+      },
+      "created":function (){
+        this.gettotalcount();
+      }
+    })
+  </script>
+</script>
+</html>

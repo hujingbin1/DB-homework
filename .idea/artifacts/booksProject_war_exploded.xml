@@ -1,0 +1,36 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="booksProject:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/booksProject_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="booksProject" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="druid-1.1.21" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/thymeleaf-3.0.12.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/ognl-3.1.26.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/unbescape-1.1.6.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/slf4j-log4j12-1.7.25.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/slf4j-api-1.7.25.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/attoparser-2.0.5.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/javassist-3.20.0-GA.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/commons-beanutils-1.8.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/commons-beanutils-bean-collections-1.8.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/commons-logging-1.1.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/libs/javaee-api-8.0.jar" />
+          <element id="library" level="project" name="libs (2)" />
+          <element id="library" level="project" name="libs" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/static/layer/layer.js" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/static/script/jquery-2.2.3.min.js" />
+        </element>
+      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/web/static/script/axios.js" />
+      <element id="file-copy" path="$PROJECT_DIR$/web/static/script/vue.js" />
+      <element id="file-copy" path="$PROJECT_DIR$/web/static/script/swiper.min.js" />
+      <element id="javaee-facet-resources" facet="booksProject/web/Web" />
+      <element id="file-copy" path="$PROJECT_DIR$/web/static/layer/layer.js" />
+      <element id="file-copy" path="$PROJECT_DIR$/web/static/script/jquery-2.2.3.min.js" />
+    </root>
+  </artifact>
+</component>

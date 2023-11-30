@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <context-param>
+        <param-name>qianzhui</param-name>
+        <param-value>/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>houzhui</param-name>
+        <param-value>.html</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>pig</servlet-name>
+        <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+        <init-param>
+            <param-name>kaptcha.border</param-name>
+            <param-value>no</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pig</servlet-name>
+        <url-pattern>/getpig</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>f5</filter-name>
+        <filter-class>books.serverlet.filter.ErrorFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>f5</filter-name>
+        <url-pattern>/pages/cart/orderserverlet</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>f4</filter-name>
+        <filter-class>books.serverlet.filter.CloseConnectionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>f4</filter-name>
+        <url-pattern>/pages/cart/orderserverlet</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>f3</filter-name>
+        <filter-class>books.serverlet.filter.TransactionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>f3</filter-name>
+        <url-pattern>/pages/cart/orderserverlet</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>f2</filter-name>
+        <filter-class>books.serverlet.filter.CharacterFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>f2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>f1</filter-name>
+        <filter-class>books.serverlet.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>f1</filter-name>
+        <url-pattern>/cartserverlet</url-pattern>
+    </filter-mapping>
+
+
+
+
+</web-app>

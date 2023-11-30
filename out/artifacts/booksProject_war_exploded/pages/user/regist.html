@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>工大书城会员注册页面</title>
+    <link type="text/css" rel="stylesheet" href="../../static/css/style.css" />
+    <link rel="stylesheet" href="../../static/css/register.css" />
+	<script type="text/javascript" src="../../static/script/vue.js"></script>
+    <script type="text/javascript" src="../../static/script/axios.min.js"></script>
+    <style type="text/css">
+      .login_form {
+        height: 420px;
+        margin-top: 25px;
+      }
+    </style>
+  </head>
+  <body>
+	  <div id="app" >
+    <div id="login_header">
+      <a href="../../index.html">
+        <img class="logo_img" alt="" src="../../static/img/npunew.png" width="200px" height="50px" />
+      </a>
+    </div>
+
+    <div class="login_banner">
+      <div class="register_form">
+        <h1>注册工大书城会员</h1>
+        <form action="/books/pages/user/regist"  method="post"  @submit="checksubmit">
+          <div class="form-item">
+            <div>
+              <label>用户名称:</label>
+              <input type="text"  placeholder="请输入用户名称" name="userName"  v-model="uname"  @blur="checkname"/>
+            </div>
+            <span class="errMess" >{{uname_errmess}}</span>
+          </div>
+          <div class="form-item">
+            <div>
+              <label>用户密码:</label>
+              <input type="password" placeholder="请输入密码" name="passWord"  v-model="upass" @blur="checkupass" />
+            </div>
+            <span class="errMess">{{upass_errmess}}</span>
+          </div>
+          <div class="form-item">
+            <div>
+              <label>确认密码:</label>
+              <input type="password" placeholder="请输入确认密码"  v-model="reupass" @blur="checkreupass"/>
+            </div>
+            <span class="errMess">{{reupass_errmess}}</span>
+          </div>
+          <div class="form-item">
+            <div>
+              <label>用户邮箱:</label>
+              <input type="text" placeholder="请输入邮箱" name="email"   v-model="uemail"  @blur="checkuemail"/>
+            </div>
+            <span class="errMess">{{uemail_errmess}}</span>
+          </div>
+		 
+          <div class="form-item">
+            <div>
+              <label>验证码:</label>
+              <div class="verify">
+                <input type="text" name="inputcoding" placeholder="" />
+                <img :src="changereq" @click="changepic"  alt="" style="height:40px;withid:150px" />
+              </div>
+            </div>
+            <span class="errMess" th:text="${errormessage}">请输入正确的验证码</span>
+          </div>
+          <button class="btn">注册</button>
+        </form>
+      </div>
+    </div>
+    <div id="bottom">
+      <span>
+          <a href="https://www.nwpu.edu.cn/">西北工业大学.Copyright ©2023</a>
+      </span>
+    </div>
+   </div>
+  </body>
+  <script >
+	   new Vue({
+		   "el":"#app",
+		   "data":{
+			   "uname":"",
+			   "uname_errmess":"",
+			   "upass":"",
+			   "upass_errmess":"",
+			   "reupass":"",
+			   "reupass_errmess":"",
+			   "uemail":"",
+			   "uemail_errmess":"",
+               "changereq":"/books/getpig",
+               "checkunameresult":false
+		   },
+		   "methods":{
+                "changepic":function ()
+                {
+                  this.changereq="/books/getpig?time="+new Date();
+                },
+
+			   "checkname":function()
+			   {
+				   var reg=/^[a-zA-Z0-9]{6,16}$/;
+				   if(reg.test(this.uname))
+				   {
+					    axios({
+                          "method":"post",
+                          "url":"/books/pages/user/registCheckname",
+                          "params":{
+                            "username":this.uname
+                          }
+                        }).then(response=>{
+                          if(response.data.flag)
+                          {
+                            this.uname_errmess=response.data.message
+                            if(response.data.message=="该用户名已存在，不能使用")
+                          {
+                            this.checkunameresult=false;
+                          }else
+                          {
+                            this.checkunameresult=true;
+                          }}else
+                          {
+                            alert("后端处理发生异常");
+                            this.checkunameresult=false;
+                          }
+
+                        })
+
+				   }
+				   else
+				   {
+					   this.uname_errmess="用户名应该由6-16位的数字或字母组成";
+                     this.checkunameresult=false;
+				   }
+			   },
+			   "checkupass":function(){
+				   var reg=/^[a-zA-Z0-9]{8,}$/;
+				   if(reg.test(this.upass))
+				   {
+					   this.upass_errmess="√";
+					   return true;
+				   }
+				   else
+				   {
+					   this.upass_errmess="密码应该由8位以上的数字和字母组成" ;
+					   return false;
+				   }
+			   },
+			   "checkreupass":function()
+			   {
+				   var reg=/^[a-zA-Z0-9]{8,}$/;
+				   if(!reg.test(this.reupass))
+				   {
+					   this.reupass_errmess="确认密码应该由8位以上的数字和字母组成";
+					   return false;
+				   }
+				   if(this.reupass==this.upass)
+				   {
+					   this.reupass_errmess="√";
+					   return true;
+				   }
+				 else{
+					 
+					 this.reupass_errmess="输入的密码不一致";
+					 return false;
+				   }
+			   },
+			   "checkuemail":function()
+			   {
+				   var reg=/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
+				   if(reg.test(this.uemail))
+				   {
+					   this.uemail_errmess="√";
+					   return true;
+				   }
+				   else
+				   {
+					   this.uemail_errmess="输入的邮箱不正确";
+					   return false;
+				   }
+			   },
+			   "checksubmit":function(ev)
+			   {
+				   if(this.checkunameresult&&this.checkupass()&&this.checkreupass()&&this.checkuemail())
+				   {
+
+				   }
+				   else
+				   {
+					   //禁止提交表单
+					   ev.preventDefault();
+				   }
+			   }
+			   
+		   }
+		   
+		   
+		   
+	   });
+  </script>
+</html>

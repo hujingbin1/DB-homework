@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>结算页面</title>
+<link type="text/css" rel="stylesheet" href="../../static/css/style.css" >
+	<link rel="stylesheet" href="../../static/css/minireset.css" />
+	<link rel="stylesheet" href="../../static/css/common.css" />
+	<link rel="stylesheet" href="../../static/css/cart.css" />
+<style type="text/css">
+	h1 {
+		text-align: center;
+		margin-top: 200px;
+		font-size: 26px;
+	}
+	.oid{
+		color: red;
+		font-weight: bolder;
+	}
+</style>
+</head>
+<body>
+
+		<div class="header">
+			<div class="w">
+				<div class="header-left">
+					<a href="../../index?reqkey=getBypageUtil&pIndex=1">
+						<img src="../../static/img/npunew.png" width="200px" height="50px"
+						/></a>
+					<span>我的购物车</span>
+				</div>
+				<div class="header-right">
+					<h3>欢迎<span th:text="${session.loginUser.userName}">登陆后的名字</span>光临工大书城</h3>
+					<div class="order"><a href="/books/pages/cart/orderMyserverlet?pIndex=1">我的订单</a></div>
+					<div class="destory"><a href="/books/pages/user/login?reqkey=loginOut">注销</a></div>
+					<div class="gohome">
+						<a href="../../index?reqkey=getBypageUtil&pIndex=1">返回</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	<div id="main">
+		<h1>你的订单已结算，订单号为:<span class="oid" th:text="${orderUUID}">订单号</span></h1>
+	</div>
+	<div id="bottom">
+		<span>
+			  <a href="https://www.nwpu.edu.cn/">西北工业大学.Copyright ©2023</a>
+		</span>
+	</div>
+</body>
+</html>

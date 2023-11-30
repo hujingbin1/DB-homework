@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="text/javascript" src="../../static/script/vue.js"></script>
+    <link rel="stylesheet" href="../../static/css/minireset.css" />
+    <link rel="stylesheet" href="../../static/css/common.css" />
+    <link rel="stylesheet" href="../../static/css/cart.css" />
+    <link rel="stylesheet" href="../../static/css/bookManger.css" />
+  </head>
+  <body>
+  <div id="abcde">
+    <div class="header">
+      <div class="w">
+        <div class="header-left">
+          <a href="../../index.html">
+            <img class="logo_img" alt="" src="../../static/img/npunew.png"  width="200px" height="50px"/>
+          </a>
+          <h1>图书管理系统</h1>
+        </div>
+        <div class="header-right">
+          <a href="#" class="order">图书管理</a>
+          <a href="/books/pages/cart/orderMyserverlet?pIndex=1" class="destory">订单管理</a>
+          <a href="../../index?reqkey=getBypageUtil&pIndex=1" class="gohome">返回商城</a>
+        </div>
+      </div>
+    </div>
+    <div class="list">
+      <div class="w">
+        <div class="add">
+          <a href="book_add.html">添加图书</a>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>图片</th>
+              <th>商品名称</th>
+              <th>价格</th>
+              <th>作者</th>
+              <th>销量</th>
+              <th>库存</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="book:${pu.dataList}">
+              <td><img th:src="'/books'+${book.imgPath}" alt="" /></td>
+              <td th:text="${book.title}"></td>
+              <td th:text="${book.price}"></td>
+              <td th:text="${book.author}"></td>
+              <td th:text="${book.sales}"></td>
+              <td th:text="${book.stock}"></td>
+              <td>
+                <a th:href="@{/pages/manager/booksserverlet(reqkey='selectById',bid=${book.id})}">修改</a>
+                <a th:href="@{/pages/manager/booksserverlet(reqkey='deleteById',bid=${book.id})}" class="del">删除</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="footer">
+          <div class="footer-right">
+            <div ><a href="/books/pages/manager/booksserverlet?reqkey=selectAll&pIndex=1">首页</a></div>
+            <div><a th:href="@{/pages/manager/booksserverlet(reqkey='selectAll',pIndex=${pu.pageIndex - 1 <=0 ? 1:pu.pageIndex - 1})}">上一页</a></div>
+            <ul >
+              <li class="active" th:each="i:${#numbers.sequence(1,pu.totalPage)}">
+                <a th:href="@{/pages/manager/booksserverlet(reqkey='selectAll',pIndex=${i})}"><span th:text="${i}"></span></a>
+              </li>
+            </ul>
+            <div ><a th:href="@{/pages/manager/booksserverlet(reqkey='selectAll',pIndex=${pu.pageIndex + 1 >= pu.totalPage ? pu.totalPage : pu.pageIndex + 1})}">下一页</a></div>
+            <div><a th:href="@{/pages/manager/booksserverlet(reqkey='selectAll',pIndex=${pu.totalPage})}">末页</a></div>
+            <span>共<span th:text="${pu.totalPage}"></span>页</span>
+            <span><span th:text="${pu.totalCount}"></span>条记录</span>
+              <form action="/books/pages/manager/booksserverlet?reqkey=selectAll" method="post" >
+            <span>到第</span>
+            <input type="text" name="pIndex" th:value="${pu.pageIndex}" />
+            <span>页</span>
+            <button>确定</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="down">
+        <a href="https://www.nwpu.edu.cn/">西北工业大学.Copyright ©2023</a>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

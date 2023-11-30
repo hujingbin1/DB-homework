@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的订单</title>
+    <link rel="stylesheet" href="../../static/css/minireset.css" />
+    <link rel="stylesheet" href="../../static/css/common.css" />
+    <link rel="stylesheet" href="../../static/css/cart.css" />
+    <link rel="stylesheet" href="../../static/css/bookManger.css" />
+    <link rel="stylesheet" href="../../static/css/orderManger.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="w">
+        <div class="header-left">
+          <a href="../../index?reqkey=getBypageUtil&pIndex=1">
+            <img class="logo_img" alt="" src="../../static/img/npunew.png"  width="200px" height="50px"/>
+          </a>
+          <h1>我的订单</h1>
+        </div>
+        <div class="header-right">
+          <h3>欢迎光临工大书城</h3>
+          <div class="destory"><a href="/books/pages/user/login?reqkey=loginOut">注销</a></div>
+          <div class="gohome">
+            <a href="../../index?reqkey=getBypageUtil&pIndex=1">返回</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="list">
+      <div class="w">
+        <table>
+          <thead>
+            <tr>
+              <th>订单编号</th>
+              <th>订单时间</th>
+              <th>订单数量</th>
+              <th>订单价格</th>
+              <th>订单状态</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="myorder:${pu.dataList}">
+              <td th:text="${myorder.orderSequence}">订单编号</td>
+              <td th:text="${myorder.createTime}">订单时间</td>
+              <td th:text="${myorder.totalCount}"> 订单数量</td>
+              <td th:text="${myorder.totalAmount}">订单价格</td>
+              <td th:if="${myorder.orderStatus == 0}">已支付未发货</td>
+              <td th:unless="${myorder.orderStatus == 0}">已发货</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="footer">
+          <div class="footer-right">
+            <div><a href="/books/pages/cart/orderMyserverlet?pIndex=1">首页</a></div>
+            <div><a th:href="@{/pages/cart/orderMyserverlet(pIndex=${ pu.pageIndex- 1 <=0 ? 1:pu.pageIndex - 1})}">上一页</a></div>
+            <div ><a th:href="@{/pages/cart/orderMyserverlet(pIndex=${pu.pageIndex + 1 >= pu.totalPage ? pu.totalPage : pu.pageIndex + 1})}">下一页</a></div>
+            <div><a th:href="@{/pages/cart/orderMyserverlet(pIndex=${pu.totalPage})}">末页</a></div>
+            <ul >
+              <li th:each="i : ${#numbers.sequence(1,pu.totalPage)}" >
+                <a th:text="${i}" th:href="@{/pages/cart/orderMyserverlet(pIndex=${i})}"></a>
+              </li>
+            </ul>
+            <span>共<span th:text="${pu.totalPage}"></span>页</span>
+            <span><span th:text="${pu.totalCount}"></span>条记录</span>
+            <form action="/books/pages/cart/orderMyserverlet" method="post" >
+              <span>到第</span>
+              <input type="text" name="pIndex" th:value="${pu.pageIndex}" />
+              <span>页</span>
+              <button>确定</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="down">
+        <a href="https://www.nwpu.edu.cn/">西北工业大学.Copyright ©2023</a>
+      </div>
+    </div>
+  </body>
+</html>

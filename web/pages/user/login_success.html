@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>工大书城登录成功页面</title>
+<link type="text/css" rel="stylesheet" href="../../static/css/style.css" >
+<style type="text/css">
+	h1 {
+		text-align: center;
+		margin-top: 200px;
+	}
+	
+	h1 a {
+		color:red;
+	}
+</style>
+</head>
+<body>
+		<div id="header">
+				<a href="../../index.html">
+					<img class="logo_img" alt="" src="../../static/img/npunew.png" width="200px" height="50px" />
+				</a>
+				<div>
+					<span>欢迎<span class="um_span" th:text="${session.loginUser.userName}">登录后的名字</span>光临工大书城</span>
+					<a href="/books/pages/cart/orderMyserverlet?pIndex=1">我的订单</a>
+					<a href="/books/pages/user/login?reqkey=loginOut">注销</a>&nbsp;&nbsp;
+					<a href="../../index?reqkey=getBypageUtil&pIndex=1">返回</a>
+				</div>
+		</div>
+		
+		<div id="main">
+			<h1>欢迎回来 <a href="../../index?reqkey=getBypageUtil&pIndex=1">转到主页</a></h1>
+		</div>
+		
+		<div id="bottom">
+			<span>
+				   <a href="https://www.nwpu.edu.cn/">西北工业大学.Copyright ©2023</a>
+			</span>
+		</div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>工大书城登录页面</title>
+   <script type="text/javascript" src="../../static/script/vue.js"></script>
+   <link type="text/css" rel="stylesheet" href="../../static/css/style.css" />
+  </head>
+  <body>
+	  <div id="app">
+    <div id="login_header">
+      <a href="../../index.html">
+        <img class="logo_img" alt="" src="../../static/img/npunew.png"  width="200px" height="50px"/>
+      </a>
+    </div>
+
+    <div class="login_banner">
+      <div id="l_content">
+        <span class="login_word">欢迎登录</span>
+      </div>
+
+      <div id="content">
+        <div class="login_form">
+          <div class="login_box">
+            <div class="tit">
+              <h1>工大书城会员</h1>
+            </div>
+            <div class="msg_cont">
+              <b></b>
+              <span class="errorMessage" >{{loginError}}</span>
+            </div>
+            <div class="form">
+              <form action="/books/pages/user/login?reqkey=loginIn" method="post" @submit="checklogin">
+                <label>用户名称：</label>
+                <input
+                        class="itxt"
+                        type="text"
+                        placeholder="请输入用户名"
+                        autocomplete="off"
+                        tabindex="1"
+                        name="username"
+                        id="username"
+                        v-model="uname"
+                />
+                <br/>
+                <br/>
+                <label>用户密码：</label>
+                <input
+                  class="itxt"
+                  type="password"
+                  placeholder="请输入密码"
+                  autocomplete="off"
+                  tabindex="1"
+                  name="password"
+                  id="password"
+				  v-model="upass"
+                />
+                <br />
+                <br />
+                <input type="submit" value="登录" id="sub_btn" />
+              </form>
+              <div class="tit">
+                <a href="regist.html">立即注册</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="bottom">
+      <span>
+        <a href="https://www.nwpu.edu.cn/">西北工业大学.Copyright ©2023</a>
+      </span>
+    </div>
+      </div>
+  </body>
+<script type="text/javascript">
+	new Vue({
+		"el":"#app",
+		"data":{
+			"uname":"",//用户名
+			"upass":"",//密码
+			"loginError":""//登录错误信息
+		},
+		"methods":{
+			"checklogin":function(ev){
+				if(this.uname=="")
+				{
+					this.loginError="用户名不能为空";
+					ev.preventDefault();
+					return;
+				}
+				if(this.upass=="")
+				{
+					this.loginError="用户密码不能为空";
+					ev.preventDefault();
+                    return ;
+				}
+			}
+			
+			
+		}
+		
+	})
+</script>
+</html>
