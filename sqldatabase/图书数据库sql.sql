@@ -61,7 +61,8 @@ CREATE TABLE t_order(
 	total_count INT,
 	total_amount DOUBLE,
 	order_status INT,
-	user_id INT
+	user_id INT,
+	foreign key (user_id) references users(id)
 );
 -- 订单详情表
 CREATE TABLE t_order_item(
@@ -71,7 +72,8 @@ CREATE TABLE t_order_item(
 	img_path VARCHAR(50),
 	item_count INT,
 	item_amount DOUBLE,
-	order_id VARCHAR(20)
+	order_id VARCHAR(20),
+	foreign key (order_id) references t_order(order_id)
 );
 
 SELECT * FROM books;
