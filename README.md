@@ -3,13 +3,15 @@
 
 ### 项目简介：
 
-本项目采用前后端分离开发，实现了一个简单的B/S架构的西工大图书商城。后端使用java语言进行开发，使用jsp、jdbc等技术，数据库使用mysql8.0，前端使用html、css、javascript，使用简单的vue框架进行美化。
+本项目采用前后端分离开发，实现了一个简单的B/S架构的西工大图书商城。后端使用java语言进行开发，使用Filter、Listener、jdbc等技术，分为三层架构，分别为控制层、服务层、持久化数据层。数据库使用mysql8.0。前端使用html、css、javascript，使用简单的vue框架进行美化。在进行前后端交互方面，使用了axios框架实现异步请求，Thymeleaf实现同步请求,使用了标准数据类型JSON格式。
 
 ### 技术栈：
 
-**后端：java+jsp+jdbc+mysql**
+**后端：java+jdbc+mysql+filter+listener**
 
 **前端：html+css+js+vue**
+
+**前后端交互：axios+thymeleaf**
 
 ### 环境搭建：
 
